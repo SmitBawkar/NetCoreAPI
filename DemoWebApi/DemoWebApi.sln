@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoWebApi", "DemoWebApi\DemoWebApi.csproj", "{E24E56BB-EF22-4692-8517-BCBAD39E7FA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{4C915C7E-144F-45DE-A22B-16E9C135FA60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoService", "DemoService\DemoService.csproj", "{FF8DEA4B-50F2-4659-9452-A088006D0906}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E24E56BB-EF22-4692-8517-BCBAD39E7FA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E24E56BB-EF22-4692-8517-BCBAD39E7FA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E24E56BB-EF22-4692-8517-BCBAD39E7FA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E24E56BB-EF22-4692-8517-BCBAD39E7FA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF8DEA4B-50F2-4659-9452-A088006D0906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF8DEA4B-50F2-4659-9452-A088006D0906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF8DEA4B-50F2-4659-9452-A088006D0906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF8DEA4B-50F2-4659-9452-A088006D0906}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF8DEA4B-50F2-4659-9452-A088006D0906} = {4C915C7E-144F-45DE-A22B-16E9C135FA60}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7DEB600C-A40A-4504-A214-6553348970CC}
+	EndGlobalSection
+EndGlobal
