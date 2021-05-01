@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
-    [ApiController]    
+    [ApiController]
+    [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {       
         private readonly ILogger<TicketsController> _logger;
@@ -17,36 +18,31 @@ namespace DemoWebApi.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("api/tickets")]
+        [HttpGet]        
         public IActionResult Get()
         {
             return Ok("Reading all tickets");
         }
 
-        [HttpGet]
-        [Route("api/tickets/{id}")]
+        [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             return Ok($"Reading ticket #{id}");
         }
 
-        [HttpPost]
-        [Route("api/tickets")]
+        [HttpPost]        
         public IActionResult Post()
         {
             return Ok($"Creating a ticket");
         }
 
-        [HttpPut]
-        [Route("api/tickets/{id}")]
+        [HttpPut("{id}")]        
         public IActionResult Put(int id)
         {
             return Ok($"Updating a ticket #{id}");
         }
 
-        [HttpDelete]
-        [Route("api/tickets/{id}")]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             return Ok($"Deleting ticket #{id}");
