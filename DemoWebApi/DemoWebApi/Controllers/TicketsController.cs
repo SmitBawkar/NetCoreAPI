@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoWebApi.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,9 @@ namespace DemoWebApi.Controllers
         }
 
         [HttpPost]        
-        public IActionResult Post()
+        public IActionResult Post([FromBody] Ticket ticket)
         {
-            return Ok($"Creating a ticket");
+            return Ok(ticket);
         }
 
         [HttpPut("{id}")]        
