@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
-    [ApiController]
-    [EndVersionV2ResourceFilterAttribute]
+    [ApiController]    
     [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {       

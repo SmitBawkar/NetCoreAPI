@@ -1,3 +1,4 @@
+using DemoWebApi.FIlters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,7 +28,7 @@ namespace DemoWebApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options => options.Filters.Add<EndVersionV2ResourceFilterAttribute>());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DemoWebApi", Version = "v1" });
