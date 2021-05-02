@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DemoWebApi.ModelValidations;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,7 @@ namespace DemoWebApi.Models
         [Required]
         public int? ProjectId { get; set; }
 
-        [Required]
+        [Required]        
         public string Title { get; set; }
 
         public string Description { get; set; }
@@ -22,6 +23,7 @@ namespace DemoWebApi.Models
         [MaxLength(10)]
         public string Owner { get; set; }
 
+        [EnsureTicketDueDate]
         public DateTime? DueDate { get; set; }
 
     }
