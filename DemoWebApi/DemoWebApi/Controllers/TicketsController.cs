@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DemoWebApi.Controllers
 {
     [ApiController]
-    [EndVersion1ResourceFilterAttribute]
+    [EndVersionV2ResourceFilterAttribute]
     [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {       

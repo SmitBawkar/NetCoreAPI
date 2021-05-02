@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DemoWebApi.FIlters
 {
-    public class EndVersion1ResourceFilterAttribute : Attribute, IResourceFilter
+    public class EndVersionV2ResourceFilterAttribute : Attribute, IResourceFilter
     {
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
