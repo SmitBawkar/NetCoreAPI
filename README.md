@@ -4,7 +4,10 @@ Building demo app to learn NetCoreAPI
 
 ## Roadmap
 - [ ] **Basics**
-  - [ ] Routing   
+  - [x] Routing
+  - [x] Model Validation
+  - [x] Filters
+  - [ ] EntityFramework basics
 - [ ] **Authentication and Authorization**
 - [ ] **UnitTesting**
 - [ ] **LoadTesting**
