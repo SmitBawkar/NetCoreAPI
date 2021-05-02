@@ -26,5 +26,7 @@ namespace DemoWebApi.Models
         [EnsureTicketDueDate]
         public DateTime? DueDate { get; set; }
 
+        public DateTime? EnterDate { get; set; }
+
     }
 }
