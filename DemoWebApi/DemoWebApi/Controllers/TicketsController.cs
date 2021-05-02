@@ -1,6 +1,7 @@
 ﻿using DemoWebApi.FIlters;
 using DemoWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace DemoWebApi.Controllers
 {
     [ApiController]
+    [EndVersion1ResourceFilterAttribute]
     [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {       
@@ -37,7 +39,7 @@ namespace DemoWebApi.Controllers
         #region POST
         [HttpPost]        
         public IActionResult Post([FromBody] Ticket ticket)
-        {
+        {            
             return Ok(ticket);
         }
 
