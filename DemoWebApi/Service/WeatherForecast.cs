@@ -1,6 +1,6 @@
 using System;
 
-namespace DemoService
+namespace Service
 {
     public class WeatherForecast
     {

@@ -1,21 +1,20 @@
-﻿using DemoWebApi.ModelValidations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Core.ModelValidations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DemoWebApi.Models
+namespace Core.Models
 {    
     public class Ticket
-    {                
+    {
         public int? TicketId { get; set; }
-        
+
         [Required]
         public int? ProjectId { get; set; }
 
-        [Required]        
+        [Required]
         public string Title { get; set; }
 
         public string Description { get; set; }
@@ -26,7 +25,19 @@ namespace DemoWebApi.Models
         [EnsureTicketDueDate]
         public DateTime? DueDate { get; set; }
 
-        public DateTime? EnterDate { get; set; }
+        public DateTime? EnterDate { get; set; }        
 
+
+        #region Model Validation
+        public bool EnsureTicketDueDateWhenOwnerIsNotNull()
+        {
+            if (Owner != null && !String.IsNullOrWhiteSpace(Owner))
+            {
+                if (!DueDate.HasValue)
+                    return false;
+            }
+            return true;
+        }
+        #endregion
     }
 }

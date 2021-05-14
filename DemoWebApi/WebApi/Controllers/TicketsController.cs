@@ -1,12 +1,8 @@
-﻿using DemoWebApi.FIlters;
-using DemoWebApi.Models;
+﻿using Core.Models;
+using DemoWebApi.FIlters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace DemoWebApi.Controllers
 {
@@ -30,8 +26,10 @@ namespace DemoWebApi.Controllers
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
-        {
-            return Ok($"Reading ticket #{id}");
+        {            
+            return Ok($"Reading ticket #{id}");            
+            
+
         }
         #endregion
 
