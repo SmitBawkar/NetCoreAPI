@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using DataStore.EF.Configuration;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,20 +16,13 @@ namespace DataStore.EF
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Project> Projects { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
-            //Data seeding
-            modelBuilder.Entity<Project>().HasData(
-                new Project { ProjectId = 1, Title = "Project1", Description ="Demo Project 1"},
-                new Project { ProjectId = 2, Title = "Project2", Description = "Demo Project 2" }
-                );
+            base.OnModelCreating(builder);
 
-            modelBuilder.Entity<Ticket>().HasData(
-                new Ticket { TicketId = 1, Title = "Bug #1", ProjectId = 1 },
-                new Ticket { TicketId = 2, Title = "Bug #2", ProjectId = 1 },
-                new Ticket { TicketId = 3, Title = "Bug #2", ProjectId = 2 }
-                );
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new ProjectEntityConfiguration());
+            builder.ApplyConfiguration(new TicketEntityConfiguration());
         }
     }
 }
