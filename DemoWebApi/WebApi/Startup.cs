@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using WebApi.Configuration;
 
 namespace DemoWebApi
 {
@@ -30,10 +30,11 @@ namespace DemoWebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BugsContext>(options =>
-            {
-                options.UseInMemoryDatabase("Bugs");                
-            });
+            services.ConfigureEntityFrameWork();
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+
+            services.AddAutoMapper(typeof(MapperInitilizer));
 
             services.AddControllers(options => options.Filters.Add<EndVersionV2ResourceFilterAttribute>());
             services.AddSwaggerGen(c =>

@@ -1,10 +1,12 @@
 ﻿using Core.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace DataStore.EF
 {
-    public class BugsContext : DbContext 
+    public class BugsContext : IdentityDbContext<IdentityUser>
     {
         public BugsContext(DbContextOptions options) : base(options)
         { 
@@ -15,6 +17,7 @@ namespace DataStore.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //Data seeding
             modelBuilder.Entity<Project>().HasData(
                 new Project { ProjectId = 1, Title = "Project1", Description ="Demo Project 1"},
