@@ -16,21 +16,21 @@ namespace DemoWebApi.Controllers
     {
         public ProjectsController(BugsContext db)
         {
-            Db = db;
+            DbContext = db;
         }
 
-        public BugsContext Db { get; }
+        private BugsContext DbContext { get; }
 
         [HttpGet]        
         public IActionResult GetAllProjects()
         {
-            return Ok(Db.Projects.ToList());
+            return Ok(DbContext.Projects.ToList());
         }
 
         [HttpGet("{id}")]        
         public IActionResult GetProjectById(int id)
         {
-            var project = Db.Projects.Find(id);
+            var project = DbContext.Projects.Find(id);
             if (project == null)
                 return NotFound();
             else
@@ -41,8 +41,8 @@ namespace DemoWebApi.Controllers
         public IActionResult CreateProject([FromBody] Project project)
         {
 
-            Db.Projects.Add(project);
-            Db.SaveChanges();
+            DbContext.Projects.Add(project);
+            DbContext.SaveChanges();
 
             return CreatedAtAction(nameof(GetProjectById),
                 new {id = project.ProjectId },
@@ -55,14 +55,14 @@ namespace DemoWebApi.Controllers
             if (id <= 0 || id != project.ProjectId)
                 return BadRequest();
 
-            Db.Entry(project).State = EntityState.Modified;
+            DbContext.Entry(project).State = EntityState.Modified;
             try
             {
-                Db.SaveChanges();
+                DbContext.SaveChanges();
             }
             catch
             {
-                if (Db.Projects.Find(id) == null)
+                if (DbContext.Projects.Find(id) == null)
                     return NotFound();
 
                 throw;
@@ -73,12 +73,12 @@ namespace DemoWebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteProject(int id)
         {
-            var project = Db.Projects.Find(id);
+            var project = DbContext.Projects.Find(id);
 
             if (project == null) return NotFound();
 
-            Db.Projects.Remove(project);
-            Db.SaveChanges();
+            DbContext.Projects.Remove(project);
+            DbContext.SaveChanges();
 
             return Ok(project);
         }

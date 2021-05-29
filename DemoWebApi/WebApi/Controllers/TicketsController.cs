@@ -1,8 +1,11 @@
 ﻿using Core.Models;
+using DataStore.EF;
 using DemoWebApi.FIlters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DemoWebApi.Controllers
 {
@@ -10,34 +13,40 @@ namespace DemoWebApi.Controllers
     [Route("api/[controller]")]
     public class TicketsController : ControllerBase
     {       
-        private readonly ILogger<TicketsController> _logger;
+        private readonly ILogger<TicketsController> _logger;        
 
-        public TicketsController(ILogger<TicketsController> logger)
+        public TicketsController(BugsContext db)
         {
-            _logger = logger;
+            DbContext = db;
         }
+
+        private BugsContext DbContext { get; }
 
         #region GET
         [HttpGet]        
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok("Reading all tickets");
+            return Ok(await DbContext.Tickets.AsNoTracking().ToListAsync());
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {            
-            return Ok($"Reading ticket #{id}");            
-            
-
+            var ticket = await DbContext.Tickets.FindAsync(id);
+            if (ticket != null)
+                return Ok(ticket);
+            else
+                return NotFound($"TicketId {id} not found");                                        
         }
         #endregion
 
         #region POST
         [HttpPost]        
-        public IActionResult Post([FromBody] Ticket ticket)
-        {            
-            return Ok(ticket);
+        public async Task<IActionResult> Post([FromBody] Ticket ticket)
+        {
+            await DbContext.Tickets.AddAsync(ticket);
+            await DbContext.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetById),new {id=ticket.TicketId }, ticket);
         }
 
         [HttpPost]
@@ -52,9 +61,24 @@ namespace DemoWebApi.Controllers
 
         #region PUT
         [HttpPut("{id}")]        
-        public IActionResult Put(int id)
+        public async Task<IActionResult> Put([FromRoute]int id, [FromBody]Ticket ticket)
         {
-            return Ok($"Updating a ticket #{id}");
+            if (id != ticket.TicketId)
+                return BadRequest("Id should be same");
+
+            DbContext.Entry(ticket).State = EntityState.Modified;
+            try
+            {
+                await DbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                if (DbContext.Tickets.Find(id) == null)
+                    return NotFound();
+
+                throw;
+            }
+            return NoContent();
         }
         #endregion
 
@@ -62,7 +86,17 @@ namespace DemoWebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Ok($"Deleting ticket #{id}");
+            var ticket = DbContext.Tickets.Find(id);
+
+            if (ticket == null)
+                return NotFound();
+            else
+            {
+                DbContext.Tickets.Remove(ticket);
+                DbContext.SaveChanges();
+            }
+            return Ok(ticket);
+
         }
         #endregion
     }

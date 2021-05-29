@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace Core.Models
         public int? TicketId { get; set; }
 
         [Required]
+        [ForeignKey("Project")]
         public int? ProjectId { get; set; }
 
         [Required]
@@ -25,7 +27,9 @@ namespace Core.Models
         [EnsureTicketDueDate]
         public DateTime? DueDate { get; set; }
 
-        public DateTime? EnterDate { get; set; }        
+        public DateTime? EnterDate { get; set; }
+
+        public Project Project { get; set; }
 
 
         #region Model Validation
