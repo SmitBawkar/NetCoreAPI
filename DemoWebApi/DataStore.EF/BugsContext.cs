@@ -23,6 +23,14 @@ namespace DataStore.EF
             builder.ApplyConfiguration(new RoleConfiguration());
             builder.ApplyConfiguration(new ProjectEntityConfiguration());
             builder.ApplyConfiguration(new TicketEntityConfiguration());
+
+            //builder.Entity<IdentityUser>().HasData(
+            //    new IdentityUser
+            //    {
+            //        UserName = "Admin",
+            //        PasswordHash = "@Dm1n",
+            //        Email="admin@Iamtheboss.com",
+            //    });
         }
     }
 }

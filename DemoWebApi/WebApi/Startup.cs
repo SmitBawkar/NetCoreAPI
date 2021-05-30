@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Service.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +34,10 @@ namespace DemoWebApi
             services.ConfigureEntityFrameWork();
             services.AddAuthentication();
             services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
 
             services.AddAutoMapper(typeof(MapperInitilizer));
+            services.AddScoped<IAuthManager, AuthManager>();
 
             services.AddControllers(options => options.Filters.Add<EndVersionV2ResourceFilterAttribute>());
             services.AddSwaggerGen(c =>
@@ -54,8 +57,10 @@ namespace DemoWebApi
             }
 
             bugsContext.Database.EnsureCreated();
-
-            app.UseRouting();            
+            
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

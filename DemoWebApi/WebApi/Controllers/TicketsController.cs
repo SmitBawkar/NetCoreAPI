@@ -1,6 +1,7 @@
 ﻿using Core.Models;
 using DataStore.EF;
 using DemoWebApi.FIlters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -40,8 +41,9 @@ namespace DemoWebApi.Controllers
         }
         #endregion
 
-        #region POST
-        [HttpPost]        
+        #region POST        
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] Ticket ticket)
         {
             await DbContext.Tickets.AddAsync(ticket);

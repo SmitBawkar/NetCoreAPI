@@ -1,14 +1,16 @@
 ﻿using AutoMapper;
+using Core.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Service.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApi.DTO;
 
 namespace WebApi.Controllers
 {
@@ -18,12 +20,14 @@ namespace WebApi.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;        
         private readonly IMapper _mapper;
+        private readonly IAuthManager _authManager;
 
-        public AccountController(UserManager<IdentityUser> userManager,  IMapper mapper)
+        public AccountController(UserManager<IdentityUser> userManager,  IMapper mapper, IAuthManager authManager)
         {
             _userManager = userManager;            
             _mapper = mapper;
-        }
+            _authManager = authManager ;
+    }
 
         [HttpPost]
         [Route("register")]
@@ -34,29 +38,27 @@ namespace WebApi.Controllers
 
             if (!result.Succeeded)
                 return BadRequest();
-            
+            await _userManager.AddToRolesAsync(user, userDto.Roles);
             return Accepted(userDto);
         }
 
 
-        [HttpGet]        
+        [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userManager.Users.ToListAsync());
             
         }
 
-        //[HttpPost]
-        //[Route("login")]
-        //public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
-        //{
-        //    var result = await _signInManager.PasswordSignInAsync(loginDto.Email, loginDto.PasswordHash, false, false);
-
-        //    if (!result.Succeeded)
-        //        return Unauthorized(loginDto);
-
-        //    return Accepted();
-
-        //}
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        {            
+            if (!await _authManager.ValidateUser(loginDto))
+                return Unauthorized();
+            else
+                return Accepted( new { token = await _authManager.CreateToken() });                      
+        }
     }
 }
