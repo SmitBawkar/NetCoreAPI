@@ -44,7 +44,7 @@ namespace WebApi.Controllers
 
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Get()
         {
             return Ok(await _userManager.Users.ToListAsync());

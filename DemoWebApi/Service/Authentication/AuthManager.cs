@@ -38,6 +38,7 @@ namespace Service.Authentication
             var expiration = DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings["Lifetime"]));
             var token = new JwtSecurityToken(
                 issuer : jwtSettings["Issuer"],
+                audience: jwtSettings["Issuer"],
                 claims : claims,
                 expires: expiration,
                 signingCredentials: signInCred

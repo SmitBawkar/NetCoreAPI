@@ -43,7 +43,7 @@ namespace DemoWebApi.Controllers
 
         #region POST        
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> Post([FromBody] Ticket ticket)
         {
             await DbContext.Tickets.AddAsync(ticket);
